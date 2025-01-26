@@ -9,24 +9,26 @@ import (
 )
 
 func HandleExport(ants []int, turns int, shortestPathIndex int, originalData string) {
+    fmt.Println(originalData+"\n")
 
-	fmt.Println(originalData + "\n")
+    var result = []string{}
+    AntsMoved := 1
 
-	var result = make([]string, turns, turns)
-	AntsMoved := 1
-
-	for i, Ants := range ants {
-		for j := 0; j < Ants; j++ {
-			for k, room := range GlobVar.AllValidPaths[shortestPathIndex][i][1:] {
-				if result[k+j] != "" {
-					result[k+j] += " "
-				}
-				result[k+j] += "L" + strconv.Itoa(AntsMoved) + "-" + room
-			}
-			AntsMoved++
-		}
-	}
-	fmt.Print(strings.Join(result, "\n"))
+     for i, Ants := range ants {
+        for j:= 0 ; j < Ants; j++{
+            for k, room:= range GlobVar.AllValidPaths[shortestPathIndex][i][1:] {
+                if k+j > len(result)-1 {
+                    result = append(result, "")
+                }
+                if result[k+j] != "" {
+                    result[k+j] += " "
+                }
+                result[k+j] += "L"+strconv.Itoa(AntsMoved)+"-"+room
+            }
+            AntsMoved++
+        }
+    }
+    fmt.Print(strings.Join(result, "\n"))
 }
 
 
