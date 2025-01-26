@@ -8,12 +8,14 @@ import (
 	"strings"
 )
 
+// HandleExport prints the input data and simulates the movement of ants along the shortest path.
 func HandleExport(ants []int, turns int, shortestPathIndex int, originalData string) {
     fmt.Println(originalData+"\n")
 
     var result = []string{}
     AntsMoved := 1
 
+    // Simulate ant movement along the shortest path
      for i, Ants := range ants {
         for j:= 0 ; j < Ants; j++{
             for k, room:= range GlobVar.AllValidPaths[shortestPathIndex][i][1:] {
@@ -28,10 +30,13 @@ func HandleExport(ants []int, turns int, shortestPathIndex int, originalData str
             AntsMoved++
         }
     }
+    // Print the movement of ants
     fmt.Print(strings.Join(result, "\n"))
 }
 
 
+// ParsingData parses the input data and initializes global variables.
+// It validates the number of ants, rooms, and links.
 func ParsingData(str string) error {
     var err error
     roomCordinations := make(map[string]bool)
@@ -117,6 +122,8 @@ func ParsingData(str string) error {
 }
 
 
+// checkIsValideRoomInitialisation validates room initialization.
+// It ensures that room names and coordinates are unique and valid.
 func checkIsValideRoomInitialisation(roomNames map[string]bool, roomCordinations map[string]bool, spaceSplit []string, i int) error {
 	var err error
 	
@@ -141,6 +148,8 @@ func checkIsValideRoomInitialisation(roomNames map[string]bool, roomCordinations
 	return nil
 }
 
+// fillRoomData stores links between rooms in the global Rooms map.
+// It ensures that links are valid and not duplicated.
 func fillRoomData(str string) error {
     split := strings.Split(str, "-")
 

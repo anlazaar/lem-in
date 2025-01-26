@@ -7,6 +7,8 @@ import (
 	"os"
 )
 
+// OrderAnts assigns ants to the shortest path and calculates the number of turns required.
+// It returns the number of turns and the ordered list of ants.
 func OrderAnts(indexValidPaths int) (int, []int) {
 
 	foundPath := GlobVar.AllValidPaths[indexValidPaths]
@@ -35,6 +37,8 @@ func OrderAnts(indexValidPaths int) (int, []int) {
 	return shortestPathLen - 1, ants
 }
 
+// FindValidPaths uses BFS to find all valid paths from the start room to the end room.
+// It handles backtracking and ensures that paths do not overlap.
 func FindValidPaths() {
 
 	linksToRemove := make(map[string][]string)
@@ -57,11 +61,6 @@ func FindValidPaths() {
 			GlobVar.ValidPaths = [][]string{}
 
 			GlobVar.Rooms = Helpers.CopyRoomsMap(GlobVar.OriginalRooms)
-			// real    3m14.442s
-			// user    5m42.522s
-			// sys     0m13.767s
-			// Rooms = make(map[string]Room)
-			// ParsingData(data, false)
 
 			for rev, links := range linksToRemove {
 				for _, toRm := range links {
@@ -87,6 +86,8 @@ func FindValidPaths() {
 	}
 }
 
+// CheckIfBackTrackingPath checks if the last found path is backtracking over an existing path.
+// It returns the rooms involved in the backtracking.
 func CheckIfBackTrackingPath() (bool, string, string) {
 	lastPath := GlobVar.ValidPaths[len(GlobVar.ValidPaths)-1]
 	pathRooms := GlobVar.ValidPaths[:len(GlobVar.ValidPaths)-1]
@@ -109,9 +110,8 @@ func CheckIfBackTrackingPath() (bool, string, string) {
 }
 
 
-
-
-
+// BFS performs a breadth-first search to find a valid path from the start room to the end room.
+// It handles backtracking and ensures that rooms are not revisited.
 func BFS() bool {
 
 	startRoom := GlobVar.Rooms[GlobVar.Start]

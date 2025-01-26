@@ -2,6 +2,8 @@ package Helpers
 
 import "lem-in/GlobVar"
 
+// RemovePathsLinks removes links between rooms that are part of a valid path.
+// This ensures that paths do not overlap.
 func RemovePathsLinks() {
 	for index := 0; index < len(GlobVar.ValidPaths); index++ {
 		path := GlobVar.ValidPaths[index]
@@ -13,6 +15,8 @@ func RemovePathsLinks() {
 	}
 }
 
+// SaveBeforeInPath stores the previous room in the path for each room.
+// This is used during backtracking to avoid revisiting rooms.
 func SaveBeforeInPath() {
 	lastPath := GlobVar.ValidPaths[len(GlobVar.ValidPaths)-1]
 	for i := 1; i < len(lastPath)-1; i++ { // see if the link to the end should be removed
@@ -23,7 +27,7 @@ func SaveBeforeInPath() {
 }
 
 
-// Removes a link from a vertex
+// RemoveLink removes a specific link from a room's list of links.
 func RemoveLink(links []string, conflictRoom string) []string {
 	for i := 0; i < len(links); i++ {
 		if links[i] == conflictRoom {
@@ -38,7 +42,8 @@ func RemoveLink(links []string, conflictRoom string) []string {
 }
 
 
-// Helper function to deep copy a map of Room structs
+// CopyRoomsMap creates a deep copy of the Rooms map.
+// This is used to reset the state of rooms during pathfinding.
 func CopyRoomsMap(original map[string]GlobVar.Room) map[string]GlobVar.Room {
 	copied := make(map[string]GlobVar.Room)
 
@@ -58,6 +63,8 @@ func CopyRoomsMap(original map[string]GlobVar.Room) map[string]GlobVar.Room {
 	return copied
 }
 
+// ResetIsChecked resets the IsChecked flag for all rooms.
+// This prepares the rooms for a new pathfinding iteration.
 func ResetIsChecked() {
 
 	for index := range GlobVar.Rooms {
