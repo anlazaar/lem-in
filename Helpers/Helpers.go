@@ -66,7 +66,6 @@ func CopyRoomsMap(original map[string]GlobVar.Room) map[string]GlobVar.Room {
 // ResetIsChecked resets the IsChecked flag for all rooms.
 // This prepares the rooms for a new pathfinding iteration.
 func ResetIsChecked() {
-
 	for index := range GlobVar.Rooms {
 		room := GlobVar.Rooms[index]
 		room.IsChecked = false
